@@ -1,8 +1,8 @@
 from bottle import route, run, template
-import fetch_balance
+import balance
 
 @route('/balance')
 def index():
-    return { 'balance': fetch_balance.refresh() }
+    return { 'balance': balance.fetch() }
 
 run(host='localhost', port=8090)
