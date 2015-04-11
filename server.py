@@ -3,6 +3,6 @@ import fetch_balance
 
 @route('/balance')
 def index():
-    return template('{ balance: {{balance}}}', balance=fetch_balance.balance)
+    return { 'balance': fetch_balance.refresh() }
 
 run(host='localhost', port=8090)
