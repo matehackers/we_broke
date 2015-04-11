@@ -1,7 +1,9 @@
 # we_broke
-script to fetch our current balance =(
+project to fetch our current balance from our google drive document
 
-# Requirements
-
+# requirements
  * pydrive
  * bottle
+
+# usage
+```python server.py```
