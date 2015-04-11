@@ -38,4 +38,5 @@ with open('result.csv','r') as f:
         m = regex.search(line)
         if m:
             print(m.groups(0)[0])
+            balance = m.groups(0)[0]
 
