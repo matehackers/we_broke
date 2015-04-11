@@ -7,7 +7,7 @@ import re
 
 balance = 0
 
-def refresh():
+def fetch():
     global balance
     # Creating an oauth state machine
     gauth = GoogleAuth()
@@ -27,8 +27,8 @@ def refresh():
         }
     }
 
-    # metadata given by FetchMetadata() is incomplete, it have the exportLink
-    # for csv format so I have to inject it manually
+    # Metadata given by FetchMetadata() is incomplete, it doesn't have the
+    # exportLink key for csv format so I have to inject it manually
     file = GoogleDriveFile(gauth, metadata={ "id": MATEHACKERS_FINANCES_DOCUMENT_ID }, uploaded=True)
     file.FetchMetadata()
     metadata_copy = file.metadata.copy()
@@ -36,17 +36,16 @@ def refresh():
     file.metadata = metadata_copy
 
     # I couldn't make GetConstentString() that was supposed to bring the text
-    # only instead of saving a file
+    # only instead of saving a file to work, that's why I am saving a file here
     file.GetContentFile('result.csv', mimetype='text/csv')
 
     regex = re.compile("Em caixa:,\"(-?\d+,?\d*)\"")
 
-    # since we were forced to get a file now we have to read it.
+    # Since we were 'forced' to get a file now we have to read it.
     with open('result.csv','r') as f:
         for line in f:
             m = regex.search(line)
             if m:
-                print(m.groups(0)[0])
                 balance = m.groups(0)[0]
 
     return balance
