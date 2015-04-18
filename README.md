@@ -10,10 +10,7 @@ project to fetch our current balance from our google drive document
 
 firstly, you need to get your credentials authorized to run fetch the balance
 
-```
-  $ python
-
-```
+``` $ python ```
 ```
   >>> import balance
   balance.fetch()
