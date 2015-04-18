@@ -18,6 +18,6 @@ balance.fetch()
 # copy the code and paste it on the command line
 ```
 
-then you can simply run the server
+then you may simply run the server
 
 ```$ python server.py```
