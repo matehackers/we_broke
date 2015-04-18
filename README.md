@@ -15,7 +15,9 @@ firstly, you need to get your credentials authorized to run fetch the balance
 >>> import balance
 balance.fetch()
 # Click on the provided URL, authorize your credentials, 
-copy the code and paste it on the command line
+# copy the code and paste it on the command line
 ```
+
+then you can simply run the server
 
 ```$ python server.py```
