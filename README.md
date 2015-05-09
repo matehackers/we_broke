@@ -4,6 +4,20 @@ project to fetch our current balance from our google drive document
 # requirements
  * pydrive
  * bottle
+ * python 2.7
 
 # usage
-```python server.py```
+
+firstly, you need to get your credentials authorized to run fetch the balance
+
+``` $ python ```
+```
+>>> import balance
+balance.fetch()
+# Click on the provided URL, authorize your credentials, 
+# copy the code and paste it on the command line
+```
+
+then you may simply run the server
+
+```$ python server.py```
