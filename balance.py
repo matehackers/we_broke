@@ -4,8 +4,21 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from pydrive.files import GoogleDriveFile
 import re
+import datetime as dt
 
 balance = 0
+
+def days_remaining():
+    hoje = dt.date.today()
+    if dt.date.today().day < 5:
+        dia_pagamento = hoje.replace(day=5)
+        return (dia_pagamento - hoje).days
+    else:
+        dia_pagamento = dt.date.today().replace(day=5, month=hoje.month+1)
+        return (dia_pagamento - hoje).days
+
+def last_update(file_metadata):
+    return file_metadata.get('modifiedDate')
 
 def fetch():
     global balance
@@ -48,5 +61,9 @@ def fetch():
             if m:
                 balance = m.groups(0)[0]
 
-    return balance
+    return {
+        'balance': balance,
+        'lastUpdate': last_update(file),
+        'daysRemaining': days_remaining()
+    }
 

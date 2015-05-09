@@ -3,6 +3,6 @@ import balance
 
 @route('/balance')
 def index():
-    return { 'balance': balance.fetch() }
+    return balance.fetch()
 
 run(host='localhost', port=8090)
