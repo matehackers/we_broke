@@ -5,6 +5,8 @@ from pydrive.drive import GoogleDrive
 from pydrive.files import GoogleDriveFile
 import re
 import datetime as dt
+import dateutil.parser
+from dateutil import tz
 
 balance = 0
 
@@ -17,8 +19,14 @@ def days_remaining():
         dia_pagamento = dt.date.today().replace(day=5, month=hoje.month+1)
         return (dia_pagamento - hoje).days
 
-def last_update(file_metadata):
+def find_last_update(file_metadata):
     return file_metadata.get('modifiedDate')
+
+def humanize(unhuman_raw_date):
+    local_tz = tz.gettz('BRT')
+    date = dateutil.parser.parse(unhuman_raw_date)
+    local_date = date.astimezone(local_tz)
+    return local_date.strftime("%d-%m-%y %H-%M %Z")
 
 def fetch():
     global balance
@@ -60,10 +68,12 @@ def fetch():
             m = regex.search(line)
             if m:
                 balance = m.groups(0)[0]
+    last_update = find_last_update(file)
 
     return {
         'balance': balance,
-        'lastUpdate': last_update(file),
-        'daysRemaining': days_remaining()
+        'lastUpdate': last_update,
+        'daysRemaining': days_remaining(),
+        'lastUpdateHuman': humanize(last_update)
     }
 
