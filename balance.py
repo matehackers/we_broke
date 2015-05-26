@@ -22,11 +22,12 @@ def days_remaining():
 def find_last_update(file_metadata):
     return file_metadata.get('modifiedDate')
 
-def humanize(unhuman_raw_date):
+def humanize_date(uct_date_string):
+    # receives a date string and converts it to a brt localized date string
     local_tz = tz.gettz('BRT')
-    date = dateutil.parser.parse(unhuman_raw_date)
+    date = dateutil.parser.parse(uct_date_string)
     local_date = date.astimezone(local_tz)
-    return local_date.strftime("%d-%m-%y %H-%M %Z")
+    return local_date.strftime("%d-%m-%y %H:%M %Z")
 
 def fetch():
     global balance
@@ -68,12 +69,13 @@ def fetch():
             m = regex.search(line)
             if m:
                 balance = m.groups(0)[0]
+
     last_update = find_last_update(file)
 
     return {
         'balance': balance,
         'lastUpdate': last_update,
         'daysRemaining': days_remaining(),
-        'lastUpdateHuman': humanize(last_update)
+        'lastUpdateHuman': humanize_date(last_update)
     }
 
