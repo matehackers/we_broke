@@ -11,15 +11,16 @@ project to fetch our current balance from our google drive document
 
 firstly, you need to get your credentials authorized to run fetch the balance
 
-``` $ python ```
-```
+```python
 >>> import balance
 balance.fetch()
 # Click on the provided URL, authorize your credentials, 
 # copy the code and paste it on the command line
-
-``` $ python ```
 ```
+
+# response
+
+```python
 {
   lastUpdate: UTC standard formatted,
   lastUpdateHuman: BRT %d-%m-%y %H:%M %Z formatted,
@@ -27,9 +28,6 @@ balance.fetch()
   daysRemaining: int
 }
 ```
-
-# response
-
 then you may simply run the server
 
 ```$ python server.py```
