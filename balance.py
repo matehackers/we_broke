@@ -3,14 +3,22 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from pydrive.files import GoogleDriveFile
+from dateutil import tz
 import re
+import locale as l
 import datetime as dt
 import dateutil.parser
-from dateutil import tz
+import requests
 
 balance = 0
+l.setlocale(l.LC_ALL, 'pt_BR.UTF8')
 
-def days_remaining():
+def fetch_unlock_balance():
+    unlock_text = requests.get('https://unlock.fund/pt-BR/matehackers').text
+    match = re.search(r'number\"\>(\d+)\</span.+arrecadados', unlock_text)
+    return match.groups(0)[0]
+
+def calculate_due_days():
     hoje = dt.date.today()
     if dt.date.today().day < 5:
         dia_pagamento = hoje.replace(day=5)
@@ -31,6 +39,7 @@ def humanize_date(uct_date_string):
 
 def fetch():
     global balance
+
     # Creating an oauth state machine
     gauth = GoogleAuth()
 
@@ -71,11 +80,14 @@ def fetch():
                 balance = m.groups(0)[0]
 
     last_update = find_last_update(file)
+    unlock_balance = fetch_unlock_balance()
 
     return {
-        'balance': balance,
+        'unlockBalance': l.atof(unlock_balance),
+        'totalBalance': l.atof(balance) + l.atof(unlock_balance),
+        'balance': l.atof(balance),
         'lastUpdate': last_update,
-        'daysRemaining': days_remaining(),
+        'daysRemaining': calculate_due_days(),
         'lastUpdateHuman': humanize_date(last_update)
     }
 
