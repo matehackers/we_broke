@@ -20,7 +20,7 @@ def fetch_unlock_balance():
 
 def calculate_due_days():
     hoje = dt.date.today()
-    if dt.date.today().day < 5:
+    if dt.date.today().day <= 5:
         dia_pagamento = hoje.replace(day=5)
         return (dia_pagamento - hoje).days
     else:
