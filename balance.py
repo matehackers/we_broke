@@ -35,7 +35,7 @@ def humanize_date(uct_date_string):
     local_tz = tz.gettz('BRT')
     date = dateutil.parser.parse(uct_date_string)
     local_date = date.astimezone(local_tz)
-    return local_date.strftime("%d-%m-%y %H:%M %Z")
+    return local_date.strftime("%d/%m/%y %H:%M %Z")
 
 def fetch():
     global balance
