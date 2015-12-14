@@ -20,12 +20,17 @@ def fetch_unlock_balance():
 
 def calculate_due_days():
     hoje = dt.date.today()
-    if dt.date.today().day <= 5:
+
+    if hoje.day <= 5:
         dia_pagamento = hoje.replace(day=5)
-        return (dia_pagamento - hoje).days
     else:
-        dia_pagamento = dt.date.today().replace(day=5, month=hoje.month+1)
-        return (dia_pagamento - hoje).days
+        ano = hoje.year
+        if hoje.month == 12:
+            ano = ano + 1
+
+        dia_pagamento = dt.date.today().replace(day=5, month=(hoje.month % 12) + 1, year=ano)
+
+    return (dia_pagamento - hoje).days
 
 def find_last_update(file_metadata):
     return file_metadata.get('modifiedDate')
