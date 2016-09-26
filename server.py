@@ -5,4 +5,4 @@ import balance
 def index():
     return balance.fetch()
 
-run(host='localhost', port=8090)
+run(host='0.0.0.0', port=8090)

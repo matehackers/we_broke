@@ -11,7 +11,7 @@ import dateutil.parser
 import requests
 
 balance = 0
-l.setlocale(l.LC_ALL, 'pt_BR.UTF8')
+l.setlocale(l.LC_ALL, 'pt_BR.utf8')
 
 def fetch_unlock_balance():
     unlock_text = requests.get('https://unlock.fund/pt-BR/matehackers').text
@@ -37,7 +37,7 @@ def find_last_update(file_metadata):
 
 def humanize_date(uct_date_string):
     # receives a date string and converts it to a brt localized date string
-    local_tz = tz.gettz('BRT')
+    local_tz = tz.gettz('UTC-3')
     date = dateutil.parser.parse(uct_date_string)
     local_date = date.astimezone(local_tz)
     return local_date.strftime("%d/%m/%y %H:%M %Z")
@@ -75,7 +75,7 @@ def fetch():
     # only instead of saving a file to work, that's why I am saving a file here
     file.GetContentFile('result.csv', mimetype='text/csv')
 
-    regex = re.compile("Em caixa:,\"(-?\d+,?\d*)\"")
+    regex = re.compile("Grana em caixa,\"(-?\d+,?\d*)\"")
 
     # Since we were 'forced' to get a file now we have to read it.
     with open('result.csv','r') as f:
